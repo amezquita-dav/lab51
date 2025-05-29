@@ -2,15 +2,15 @@
 // Configuración de la base de datos
 $host = 'bdpass1.mysql.database.azure.com';
 $db = 'alumnos';
-$user = 'angel';
+$user = 'angel@bdpass1';
 $pass = 'Amezquita12$';
 $charset = 'utf8mb4';
+$ssl_ca = __DIR__ . '/BaltimoreCyberTrustRoot.crt.pem'; // Ruta al certificado
 
-// Cadena de conexión
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
-// Opciones de conexión
 $options = [
+    PDO::MYSQL_ATTR_SSL_CA => $ssl_ca,
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 ];
