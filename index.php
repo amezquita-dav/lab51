@@ -1,11 +1,10 @@
 <?php
-// Configuración de la base de datos
 $host = 'bdpass1.mysql.database.azure.com';
 $db = 'alumnos';
 $user = 'angel@bdpass1';
 $pass = 'Amezquita12$';
 $charset = 'utf8mb4';
-$ssl_ca = __DIR__ . '/BaltimoreCyberTrustRoot.crt.pem'; // Ruta al certificado
+$ssl_ca = __DIR__ . '/BaltimoreCyberTrustRoot.crt.pem'; // Archivo SSL
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
@@ -18,19 +17,15 @@ $options = [
 $mensaje = "";
 
 try {
-    // Crear conexión PDO
     $pdo = new PDO($dsn, $user, $pass, $options);
 
-    // Verifica si se envió el formulario
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nombre = $_POST["nombre"];
-        $apellido = $_POST["apellido"];
-        $matricula = $_POST["matricula"];
-        $semestre = $_POST["semestre"];
+        $materia = $_POST["materia"];
+        $calificacion = $_POST["calificacion"];
 
-        // Inserta los datos
-        $stmt = $pdo->prepare("INSERT INTO estudiantes (nombre, apellido, matricula, semestre) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$nombre, $apellido, $matricula, $semestre]);
+        $stmt = $pdo->prepare("INSERT INTO registros (nombre, materia, calificacion) VALUES (?, ?, ?)");
+        $stmt->execute([$nombre, $materia, $calificacion]);
         $mensaje = "✅ Registro guardado correctamente.";
     }
 
@@ -38,6 +33,7 @@ try {
     $mensaje = "❌ Error de conexión: " . $e->getMessage();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
