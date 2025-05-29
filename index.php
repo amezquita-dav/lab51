@@ -4,7 +4,7 @@ $db = 'alumnos';
 $user = 'angel@bdpass1';
 $pass = 'Amezquita12$';
 $charset = 'utf8mb4';
-$ssl_ca = __DIR__ . '/BaltimoreCyberTrustRoot.crt.pem'; // Archivo SSL
+$ssl_ca = __DIR__ . '/BaltimoreCyberTrustRoot.crt.pem';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
@@ -14,25 +14,14 @@ $options = [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 ];
 
-$mensaje = "";
-
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $nombre = $_POST["nombre"];
-        $materia = $_POST["materia"];
-        $calificacion = $_POST["calificacion"];
-
-        $stmt = $pdo->prepare("INSERT INTO registros (nombre, materia, calificacion) VALUES (?, ?, ?)");
-        $stmt->execute([$nombre, $materia, $calificacion]);
-        $mensaje = "✅ Registro guardado correctamente.";
-    }
-
+    echo "✅ Conexión exitosa";
 } catch (PDOException $e) {
-    $mensaje = "❌ Error de conexión: " . $e->getMessage();
+    echo "❌ Error de conexión: " . $e->getMessage();
 }
 ?>
+
 
 
 <!DOCTYPE html>
