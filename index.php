@@ -1,26 +1,37 @@
 <?php
-$host = 'bdpass1.mysql.database.azure.com';
+$host = '20.151.178.117'; // IP pública de tu servidor MySQL
 $db = 'alumnos';
-$user = 'angel@bdpass1';
+$user = 'angel'; // Solo el nombre de usuario, sin @bdpass1
 $pass = 'Amezquita12$';
 $charset = 'utf8mb4';
+$mensaje = "";
+
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
 $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 ];
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset;sslmode=DISABLED";
-
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
     echo "✅ Conexión exitosa";
+    
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $nombre = $_POST["nombre"];
+        $apellido = $_POST["apellido"];
+        $matricula = $_POST["matricula"];
+        $semestre = $_POST["semestre"];
+
+        $stmt = $pdo->prepare("INSERT INTO estudiantes (nombre, apellido, matricula, semestre) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$nombre, $apellido, $matricula, $semestre]);
+        $mensaje = "✅ Registro guardado correctamente.";
+    }
+
 } catch (PDOException $e) {
-    echo "❌ Error de conexión: " . $e->getMessage();
+    $mensaje = "❌ Error de conexión: " . $e->getMessage();
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
