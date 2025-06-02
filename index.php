@@ -4,15 +4,13 @@ $db = 'alumnos';
 $user = 'angel@bdpass1';
 $pass = 'Amezquita12$';
 $charset = 'utf8mb4';
-$ssl_ca = __DIR__ . '/BaltimoreCyberTrustRoot.crt.pem';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset;sslmode=DISABLED";
 
 $options = [
-    PDO::MYSQL_ATTR_SSL_CA => $ssl_ca,
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 ];
+
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset;sslmode=DISABLED";
 
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
