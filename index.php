@@ -6,7 +6,7 @@ $pass = 'Amezquita12$';
 $charset = 'utf8mb4';
 $ssl_ca = __DIR__ . '/BaltimoreCyberTrustRoot.crt.pem';
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset;sslmode=DISABLED";
 
 $options = [
     PDO::MYSQL_ATTR_SSL_CA => $ssl_ca,
